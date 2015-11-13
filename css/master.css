@@ -4,5 +4,9 @@
 
   font-family: monospace;
   font-size: 4vh;
-  color: #0f0;
+  color: lime;
+}
+
+.red-beam {
+  color: red !important;
 }
