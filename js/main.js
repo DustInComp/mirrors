@@ -27,6 +27,9 @@ function Beam(initialX, initialY, initialDirection) {
         ][ "/\\ ".indexOf(origMatrix[this.yPos][this.xPos]) ]; // using a character as index.
 
       matrix[this.yPos][this.xPos] = "<span class='red-beam'>" + ">v<^"["rdlu".indexOf(this.d)] + '</span>';
+      origMatrix[this.yPos][this.xPos] = "\\/ "[ "/\\ ".indexOf(origMatrix[this.yPos][this.xPos]) ];
+    } else {
+      activeBeams.splice(activeBeams.indexOf(this), 1);
     }
   }
 }
@@ -36,14 +39,13 @@ function generateMatrix() {
       str = "",
       char = "";
 
-  for (var i = 0; i < 16; i++) {
+  for (var i = 0; i < 32; i++) {
     str = "";
     arr.push([]);
 
-    for (var j = 0; j < 16; j++) {
-      char = [" ", " ", "/", "\\"][Math.floor(Math.random()*4)];
-      arr[i].push(char);
-      str += char===" "? "&nbsp;": char;
+    for (var j = 0; j < 48; j++) {
+      char = "      /\\"[Math.floor(Math.random()*8)];
+      arr[i].push(char, " ");
     }
   }
   return arr;
@@ -53,7 +55,7 @@ function pasteMatrix() {
   var htmlStr = matrix.map( function(i) {
       return i.map( function(j) {
         return j===" "?"&nbsp;":j;
-      }).join("&nbsp;");
+      }).join("");
     }).join("<br>");
 
   textspace.innerHTML = htmlStr;
@@ -68,7 +70,7 @@ function animationStep() {
   matrix = cloneMatrix( origMatrix );
 
   if ( (Date.now()-animStartTime) > 1000*beamCount ) {
-    activeBeams.push( new Beam(-1, 7, "r") );
+    activeBeams.push( new Beam(-1, 15, "r") );
     beamCount++;
   }
 

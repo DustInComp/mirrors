@@ -3,7 +3,8 @@
   cursor: default;
 
   font-family: monospace;
-  font-size: 4vh;
+  font-size: 3vh;
+  line-height: 2.8vh;
   color: lime;
 }
 
