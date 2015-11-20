@@ -1,13 +1,13 @@
 * {
-  background-color: #111;
-  cursor: default;
+  background-color: #000000;
+  cursor: pointer;
 
   font-family: monospace;
   font-size: 3vh;
   line-height: 2.8vh;
-  color: lime;
+  color: #00FF00;
 }
 
 .red-beam {
-  color: red !important;
+  color: #FF0000 !important;
 }
