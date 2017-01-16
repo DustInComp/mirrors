@@ -1,6 +1,7 @@
 * {
   background-color: #000000;
-  cursor: pointer;
+  -webkit-user-select: none;
+  cursor: default;
 
   font-family: monospace;
   font-size: 3vh;
@@ -9,5 +10,5 @@
 }
 
 .red-beam {
-  color: #FF0000 !important;
+  color: #FF0000;
 }

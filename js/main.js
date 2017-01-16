@@ -7,30 +7,43 @@ function cloneMatrix(arr) {
 function Beam(initialX, initialY, initialDirection) {
   this.xPos = initialX;
   this.yPos = initialY;
-  this.d = initialDirection;
+  this.d    = initialDirection;
 
   this.step = function() {
-    this.d==="r"? this.xPos++:
-    this.d==="d"? this.yPos++:
-    this.d==="l"? this.xPos--:
-    this.d==="u"? this.yPos--: null;
+    // Move the beam
+    this.d === "r" ? this.xPos++ :
+    this.d === "d" ? this.yPos++ :
+    this.d === "l" ? this.xPos-- :
+    this.d === "u" ? this.yPos-- :
+    null;
 
-    // this.yPos += this.d==="d"? 1: this.d==="u": -1: 0;
-    // this.xPos += this.d==="r"? 1: this.d==="l": -1: 0;
-    if (this.xPos>=0 && this.xPos<matrix[0].length && this.yPos>=0 && this.yPos<matrix.length) {
-      if (origMatrix[this.yPos][this.xPos].search(/[v\^<>]/) !== -1) console.log("Ayy, shit! This shouldn't happen.");
+    /**
+     * Check the tile the beam landed on when it's still on the board
+     *   Otherwise, remove it.
+     */
+    if (this.xPos >= 0 && this.xPos < matrix[0].length &&
+        this.yPos >= 0 && this.yPos < matrix.length) {
 
+      // There shouldn't be beam characters in the original board.
+      if (origMatrix[this.yPos][this.xPos].search(/[v\^<>]/) !== -1) {
+        alert("Aw shit! Something bad happened.");
+        return;
+      }
+
+      // When hitting a '/', directions 'u' / 'r', and 'd' / 'l' are swapped.
+      // When hitting a '\', directions 'u' / 'l', and 'd' / 'r' are swapped.
+      // When hitting a ' ', keep direction.
       this.d = [
-          "uldr"[ "rdlu".indexOf(this.d) ],
-          "drul"[ "rdlu".indexOf(this.d) ],
+          "uldr" [ "rdlu".indexOf(this.d) ],  // using a character as index
+          "drul" [ "rdlu".indexOf(this.d) ],
           this.d
-        ][ "/\\ ".indexOf(origMatrix[this.yPos][this.xPos]) ]; // using a character as index.
+      ] [ "/\\ ".indexOf(origMatrix[this.yPos][this.xPos]) ];
 
-      matrix[this.yPos][this.xPos] = "<span class='red-beam'>" + ">v<^"["rdlu".indexOf(this.d)] + '</span>';
+      matrix[this.yPos][this.xPos] =
+        "<span class='red-beam'>" + ">v<^"["rdlu".indexOf(this.d)] + '</span>';
       origMatrix[this.yPos][this.xPos] = "\\/ "[ "/\\ ".indexOf(origMatrix[this.yPos][this.xPos]) ];
-    } else {
-      activeBeams.splice(activeBeams.indexOf(this), 1);
-    }
+    } else
+      activeBeams.splice( activeBeams.indexOf(this), 1 );
   }
 }
 
@@ -59,11 +72,6 @@ function pasteMatrix() {
     }).join("<br>");
 
   textspace.innerHTML = htmlStr;
-
-  // textspace.innerHTML = "";
-  // for (var i = 0; i < matrix.length; i++) {
-  //   textspace.innerHTML += matrix[i].join("&nbsp;")+"<br>";
-  // }
 }
 
 function animationStep() {
